@@ -3,9 +3,10 @@ import "./styles.css";
 
 export const ModalForTable = ({ dataToModal, setShowModal, clickBtn }) => {
   const [data, setData] = useState(dataToModal);
+  console.log(Object.entries(data));
 
-  const handleInputChange = (key) => (e) => {
-    setData({ ...data, [key]: e.target.value });
+  const handleInputChange = (field, value) => {
+    setData({ ...data, [field]: value });
   };
   const submitChange = () => {
     const values = Object.values(data);
@@ -28,20 +29,37 @@ export const ModalForTable = ({ dataToModal, setShowModal, clickBtn }) => {
           e.stopPropagation();
         }}
       >
-        {Object.keys(data).map((key) => (
-          <div className="InputContainerTable" key={key}>
-            <input
-              className="Input"
-              type="text"
-              required
-              value={data[key]}
-              onChange={handleInputChange(key)}
-            />
-            <label className="Label">
-              {key.charAt(0).toUpperCase() + key.slice(1)}:
-            </label>
-          </div>
-        ))}
+        <div className="InputContainerTable">
+          <input
+            className="Input"
+            type="text"
+            required
+            value={data.accountNumber}
+            onChange={(e) => handleInputChange("accountNumber", e.target.value)}
+          />
+          <label className="Label">Account Number</label>
+        </div>
+        <div className="InputContainerTable">
+          <input
+            className="Input"
+            type="text"
+            required
+            value={data.ownerId}
+            onChange={(e) => handleInputChange("ownerId", e.target.value)}
+          />
+          <label className="Label">Owner ID</label>
+        </div>
+        <div className="InputContainerTable">
+          <input
+            className="Input"
+            type="text"
+            required
+            value={data.accountType}
+            onChange={(e) => handleInputChange("accountType", e.target.value)}
+          />
+          <label className="Label">Account Type</label>
+        </div>
+
         <button className="ButtonSubmit" onClick={() => submitChange()}>
           Submit
         </button>

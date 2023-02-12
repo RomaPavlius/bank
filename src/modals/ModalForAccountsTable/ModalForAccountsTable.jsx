@@ -38,22 +38,26 @@ export const ModalForAccountsTable = ({
       >
         {Object.keys(data).map((key) =>
           key === "address" ? (
-            <div key={key}>
-              {Object.keys(data[key]).map((addressKey) => (
-                <div className="InputContainer" key={addressKey}>
-                  <input
-                    className="Input"
-                    type="text"
-                    required
-                    value={data.address[addressKey]}
-                    onChange={handleAddressInputChange(addressKey)}
-                  />
-                  <label className="Label">
-                    {addressKey.charAt(0).toUpperCase() + addressKey.slice(1)}
-                  </label>
-                </div>
-              ))}
-            </div>
+            key === "accountId" ? (
+              <div key={key}>
+                {Object.keys(data[key]).map((addressKey) => (
+                  <div className="InputContainer" key={addressKey}>
+                    <input
+                      className="Input"
+                      type="text"
+                      required
+                      value={data.address[addressKey]}
+                      onChange={handleAddressInputChange(addressKey)}
+                    />
+                    <label className="Label">
+                      {addressKey.charAt(0).toUpperCase() + addressKey.slice(1)}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div></div>
+            )
           ) : (
             <div className="InputContainer" key={key}>
               <input

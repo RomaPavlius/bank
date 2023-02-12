@@ -29,9 +29,7 @@ export const AccountOwners = () => {
     },
   ]);
   const dataToModal = {
-    accountId: "",
     accountNumber: "",
-    lastTransactionId: "",
     ownerId: "",
     accountType: "",
   };
