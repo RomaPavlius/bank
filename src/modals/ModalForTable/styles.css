@@ -1,0 +1,73 @@
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ModalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  padding: 25px;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.InputContainerTable {
+  position: relative;
+  margin-bottom: 25px;
+}
+Input {
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #757575;
+}
+Input:focus {
+  outline: none;
+}
+
+/* LABEL ======================================= */
+Label {
+  color: #999;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+Input:focus ~ Label,
+Input:valid ~ Label {
+  top: -20px;
+  font-size: 14px;
+  color: #5264ae;
+}
+
+.ButtonSubmit {
+  background: lightblue;
+  padding: 8px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.ButtonSubmit:hover {
+  background: blue;
+}

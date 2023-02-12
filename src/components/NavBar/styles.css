@@ -1,0 +1,35 @@
+.Header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #0f181f;
+  padding: 10px 15px;
+  color: #fff;
+}
+.Logo {
+}
+
+.Menu {
+  margin-left: 20px;
+  background-color: #2b3e4d;
+  padding: 5px 15px;
+}
+.Navigation {
+  display: flex;
+  flex-direction: row;
+  background-color: #1d2b36;
+  padding: 10px 15px;
+  color: #fff;
+}
+.NavigationLink {
+  margin-right: 15px;
+  color: #fff;
+  text-decoration: none;
+  padding-bottom: 5px;
+}
+.NavigationLink:hover {
+  border-bottom: 1px solid #fff;
+}
+.NavigationLink:focus {
+  border-bottom: 1px solid #fff;
+}

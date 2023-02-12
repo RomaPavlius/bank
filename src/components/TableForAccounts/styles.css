@@ -1,0 +1,38 @@
+.DataTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.DataTableHeader {
+  background-color: #ddd;
+}
+
+.DataTableHeaderRow th {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+.DataTableHeaderRow th:not(:first-child) {
+  border-left: 1px solid black;
+}
+
+.DataTableCell {
+  max-width: 100px;
+  word-wrap: break-word;
+  text-align: center;
+  padding: 12px;
+}
+.EditButton {
+  float: right;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: 15px;
+  border-radius: 5px;
+}
+
+.EditButton:hover {
+  background-color: #3e8e41;
+}
