@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { Input } from "../../components/Input/Input";
 import "./styles.css";
 
-export const ModalForTable = ({ dataToModal, setShowModal, clickBtn }) => {
+export const ModalForAccounts = ({ dataToModal, setShowModal, clickBtn }) => {
   const [data, setData] = useState(dataToModal);
-  console.log(Object.entries(data));
+  const [error, setError] = useState(false);
 
   const handleInputChange = (field, value) => {
     setData({ ...data, [field]: value });
@@ -11,9 +12,9 @@ export const ModalForTable = ({ dataToModal, setShowModal, clickBtn }) => {
   const submitChange = () => {
     const values = Object.values(data);
     if (values.some((value) => value === "")) {
+      setError(true)
       return;
     }
-    console.log(data);
     setShowModal(false);
     clickBtn(data);
   };
@@ -29,27 +30,11 @@ export const ModalForTable = ({ dataToModal, setShowModal, clickBtn }) => {
           e.stopPropagation();
         }}
       >
-        <div className="InputContainerTable">
-          <input
-            className="Input"
-            type="text"
-            required
-            value={data.accountNumber}
-            onChange={(e) => handleInputChange("accountNumber", e.target.value)}
-          />
-          <label className="Label">Account Number</label>
-        </div>
-        <div className="InputContainerTable">
-          <input
-            className="Input"
-            type="text"
-            required
-            value={data.ownerId}
-            onChange={(e) => handleInputChange("ownerId", e.target.value)}
-          />
-          <label className="Label">Owner ID</label>
-        </div>
-        <div className="InputContainerTable">
+        <Input value={data.accountNumber} handleInputChange={handleInputChange} params={'accountNumber'} labelValue={"Account Number"}/>
+        <Input value={data.ownerId} handleInputChange={handleInputChange} params={'ownerId'} labelValue={"Owner ID"}/>
+        <Input value={data.accountType} handleInputChange={handleInputChange} params={'accountType'} labelValue={"Account Type"}/>
+        
+        <div className="ModalInput">
           <input
             className="Input"
             type="text"
@@ -59,6 +44,7 @@ export const ModalForTable = ({ dataToModal, setShowModal, clickBtn }) => {
           />
           <label className="Label">Account Type</label>
         </div>
+        {error&&<div style={{color:'red'}}>Input all form</div>}
 
         <button className="ButtonSubmit" onClick={() => submitChange()}>
           Submit

@@ -1,0 +1,37 @@
+
+.InputContainer {
+    position: relative;
+    margin-bottom: 25px;
+  }
+  Input {
+    font-size: 13px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #757575;
+  }
+  Input:focus {
+    outline: none;
+  }
+  
+  Label {
+    color: #999;
+    font-size: 13px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+  
+  Input:focus ~ Label,
+  Input:valid ~ Label {
+    top: -20px;
+    font-size: 14px;
+    color: #5264ae;
+  }
+  

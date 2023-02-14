@@ -1,26 +1,27 @@
 import { useState } from "react";
-import { ModalForAccountsTable } from "../../modals/ModalForAccountsTable/ModalForAccountsTable";
+import { ModalForAccounts } from "../../modals/ModalForAccounts/ModalForAccounts";
 import "./styles.css";
 
-export const TableForAccounts = ({ data }) => {
+export const TableForAccounts = ({ data, clickBtn, setAccountId }) => {
   const [showModal, setShowModal] = useState(false);
   const [index, setIndex] = useState(0);
 
   const handleClickEdit = (index) => {
     setIndex(index);
+    setAccountId(data[index].accountId);
     setShowModal(true);
   };
 
-  const changeData = (dataModal) => {
-    return (data[index] = dataModal);
+  const changeData = (newData) => {
+    clickBtn(newData);
   };
   return (
     <>
       <table className="DataTable">
         <thead className="DataTableHeader">
           <tr className="DataTableHeaderRow">
-            {Object.keys(data[0]).map((key,index) => (
-              <th className="DataTableHeaderCell" key={index}>
+            {Object.keys(data[0]).map((key) => (
+              <th className="DataTableHeaderCell" key={key}>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </th>
             ))}
@@ -28,28 +29,27 @@ export const TableForAccounts = ({ data }) => {
         </thead>
         <tbody>
           {data.map((row, index) => (
-            <tr className="DataTableRow" key={row.accountId}>
-              <td className="DataTableCell">{row.accountId}</td>
-              <td className="DataTableCell">{row.firstName}</td>
-              <td className="DataTableCell">{row.lastName}</td>
-              <td className="DataTableCell">{row.age}</td>
-              <td className="DataTableCell">
-                {row.address.country},{row.address.city},{row.address.street} ,
-                {row.address.number}
-                <button
-                  className="EditButton"
-                  onClick={() => handleClickEdit(index)}
-                >
-                  Edit
-                </button>
-              </td>
+            <tr className="DataTableRow" key={index}>
+              {Object.keys(row).map((key, innerIndex) => (
+                <td className="DataTableCell" key={row[key] + innerIndex}>
+                  {row[key]}
+                  {innerIndex === Object.keys(row).length - 1 && (
+                    <button
+                      className="EditButton"
+                      onClick={() => handleClickEdit(index)}
+                    >
+                      Edit
+                    </button>
+                  )}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
       </table>
 
       {showModal && (
-        <ModalForAccountsTable
+        <ModalForAccounts
           dataToModal={data[index]}
           setShowModal={setShowModal}
           clickBtn={changeData}
@@ -58,3 +58,4 @@ export const TableForAccounts = ({ data }) => {
     </>
   );
 };
+

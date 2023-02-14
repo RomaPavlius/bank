@@ -20,7 +20,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.InputContainerTable {
+.ModalInput {
   position: relative;
   margin-bottom: 25px;
 }
@@ -59,7 +59,7 @@ Input:valid ~ Label {
 }
 
 .ButtonSubmit {
-  background: lightblue;
+  background: #2196f3;
   padding: 8px;
   color: white;
   border: none;

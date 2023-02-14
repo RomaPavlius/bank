@@ -1,88 +1,92 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles.css";
-import { useGetData } from "../../hooks/useGetData";
-
-import { TableForAccounts } from "../../components/TableForAccounts/TableForAccounts";
-import { ModalForAccountsTable } from "../../modals/ModalForAccountsTable/ModalForAccountsTable";
 import ReactPaginate from "react-paginate";
+import { useGetData } from "../../hooks/useGetData";
 import useUpdateData from "../../hooks/useChangeData";
 import useAddData from "../../hooks/useAddData";
+import { NavBar } from "../../components/NavBar/NavBar";
+import { TableForAccounts } from "../../components/TableForAccounts/TableForAccounts";
+import { ModalForAccounts } from "../../modals/ModalForAccounts/ModalForAccounts";
+import { BASE_URL } from "../../utilts/data";
+
 
 export const Accounts = () => {
-  const limit = 10;
+  const limit = 5;
   const [showModal, setShowModal] = useState(false);
-  const [pageCount, setPageCount] = useState();
-  const [dataFromModal, setDataFromModal] = useState();
+  const [pageCount, setPageCount] = useState(1);
+  const [accountId, setAccountId] = useState();
+  const [totalPages, setTotalPages] = useState(1);
 
-  const changeData = (newData) => {};
-
-  const handlePageClick = (data) => {
-    setPageCount(data.selected + 1);
-  };
-  const { data, error } = useGetData(
-    "https://localhost:5287/api/v1/account-owners"
+  const [addData] = useAddData(`${BASE_URL}/api/v1/accounts`);
+  const { getData, data, error } = useGetData(
+    `${BASE_URL}/api/v1/accounts?page=${pageCount}&count=${limit}`
   );
-  // console.log(data);
-  const totalPages = Math.ceil(data.total / limit);
-  const dataToModal = {
-    accountId: "",
-    firstName: "",
-    lastName: "",
-    age: 0,
-    address: { country: "", city: "", street: "", number: 1 },
+  const [updateData] = useUpdateData(
+    `${BASE_URL}/api/v1/accounts/${accountId}`
+  );
+  useEffect(() => {
+    getData();
+  }, [pageCount]);
+
+  useEffect(() => {
+    if (data) {
+      setTotalPages(Math.ceil(data.total / limit));
+    }
+  }, [data, limit]);
+
+  const submitAdd = async (newData) => {
+    await addData(newData);
+    getData();
   };
 
-  // const [updateData] = useUpdateData(
-  //   "https://localhost:5287/api/v1/account-owners"
-  // );
+  const submitEdit = async (newData) => {
+    await updateData(newData);
+    getData();
+  };
 
-  // const handleUpdate = () => {
-  //   updateData({ name: "new_name", value: "new_value" });
-  // };
-
-  // const [addData] = useAddData(
-  //   "https://api.example.com/resources"
-  // );
-
-  // const handleChange = (event) => {
-  //   setData({
-  //     ...data,
-  //     [event.target.name]: event.target.value,
-  //   });
-  // };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   addData(data);
-  // };
-
+  const handlePageClick = ({ selected }) => {
+    setPageCount(selected + 1);
+  };
+  const dataToModal = {
+    accountNumber: "",
+    ownerId: "",
+    accountType: "",
+  };
   return (
-    <div className="Container">
-      {error && <h1>{error}</h1>}
-      {data && (
-        <>
-          <input className="Search" type="text" placeholder="Search..." />
-          <TableForAccounts data={data} />
-          <button className="ButtonAdd" onClick={() => setShowModal(true)}>
-            ADD
-          </button>
-          {showModal && (
-            <ModalForAccountsTable
-              dataToModal={dataToModal}
-              setShowModal={setShowModal}
-              clickBtn={changeData}
+    <>
+      <NavBar /><div className="Container">
+        {error && <h1>{error}</h1>}
+        {data && (
+          <>
+            <input className="Search" type="text" placeholder="Search..." />
+            <TableForAccounts
+              data={data.data}
+              clickBtn={submitEdit}
+              setAccountId={setAccountId}
             />
-          )}
-        </>
-      )}
-      <ReactPaginate
-        pageCount={totalPages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName={"Pagination"}
-        activeClassName={"Active"}
-      />
-    </div>
+            <button className="ButtonAdd" onClick={() => setShowModal(true)}>
+              ADD
+            </button>
+            {showModal && (
+              <ModalForAccounts
+                dataToModal={dataToModal}
+                setShowModal={setShowModal}
+                clickBtn={submitAdd}
+              />
+            )}
+          </>
+        )}
+        {totalPages > 1 && (
+          <ReactPaginate
+            pageCount={totalPages}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"Pagination"}
+            activeClassName={"Active"}
+          />
+        )}
+      </div>
+    </>
   );
 };
